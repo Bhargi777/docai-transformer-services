@@ -5,9 +5,9 @@ services:
     build:
       context: ./services/summarization
     ports:
-      - "8001:8000"
+      - "${SUMMARIZATION_PORT:-8001}:8000"
     environment:
-      - MODEL_NAME=facebook/bart-large-cnn
+      - MODEL_NAME=${SUMMARIZATION_MODEL:-facebook/bart-large-cnn}
     volumes:
       - model_cache:/root/.cache/huggingface
 
@@ -15,9 +15,9 @@ services:
     build:
       context: ./services/question_answering
     ports:
-      - "8002:8000"
+      - "${QA_PORT:-8002}:8000"
     environment:
-      - MODEL_NAME=distilbert-base-cased-distilled-squad
+      - MODEL_NAME=${QA_MODEL:-distilbert-base-cased-distilled-squad}
     volumes:
       - model_cache:/root/.cache/huggingface
 
