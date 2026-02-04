@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  summarization:
+    build:
+      context: ./services/summarization
+    ports:
+      - "8001:8000"
+    environment:
+      - MODEL_NAME=facebook/bart-large-cnn
+    volumes:
+      - model_cache:/root/.cache/huggingface
+
+  qa:
+    build:
+      context: ./services/question_answering
+    ports:
+      - "8002:8000"
+    environment:
+      - MODEL_NAME=distilbert-base-cased-distilled-squad
+    volumes:
+      - model_cache:/root/.cache/huggingface
+
+volumes:
+  model_cache:
