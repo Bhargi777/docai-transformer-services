@@ -20,11 +20,35 @@ Modular RESTful microservices for document summarization and question answering 
 
 -   Docker and Docker Compose
 
-### Running the Services
+### Running with Docker
 
 ```bash
 docker-compose up --build
 ```
+
+### Running Locally (Alternative)
+
+If you don't have Docker installed, you can run the services using a Python virtual environment:
+
+1. **Create and activate a virtual environment**:
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate
+   ```
+
+2. **Install dependencies**:
+   ```bash
+   pip install -r services/summarization/requirements.txt -r services/question_answering/requirements.txt
+   ```
+
+3. **Start the services**:
+   * **Summarization**: `cd services/summarization && uvicorn app.main:app --port 8001`
+   * **QA**: `cd services/question_answering && uvicorn app.main:app --port 8002`
+
+4. **Test the services**:
+   ```bash
+   python test_services.py
+   ```
 
 ### API Endpoints
 
