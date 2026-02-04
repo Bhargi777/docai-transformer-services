@@ -11,3 +11,4 @@ class QuestionAnswering:
         return result['answer']
 
 qa_instance = QuestionAnswering()
+        
