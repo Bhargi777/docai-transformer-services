@@ -10,3 +10,4 @@ ENV/
 .DS_Store
 *.log
 model_cache/
+.vercel

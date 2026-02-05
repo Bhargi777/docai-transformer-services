@@ -50,7 +50,22 @@ If you don't have Docker installed, you can run the services using a Python virt
    python test_services.py
    ```
 
+### Deployment to Vercel
+
+This project includes a `vercel.json` and a unified entry point in `api/index.py` for easy deployment to Vercel.
+
+**Note on Vercel Limitations:**
+- **Model Size**: Transformer models (like BART and BERT) are very large. Vercel Serverless Functions have a 250MB size limit. You may need to use smaller models (e.g., `distilbert`, `tiny-bert`) or external APIs (Hugging Face Inference API) for production.
+- **Timeouts**: Model inference can exceed Vercel's execution time limits (10-60s).
+- **Memory**: Ensure your Vercel plan supports the memory required for loading these models.
+
+To deploy:
+1. Push to GitHub.
+2. Connect your repository to Vercel.
+3. Vercel will automatically detect the configuration and deploy.
+
 ### API Endpoints
 
--   **Summarization**: `POST http://localhost:8001/summarize`
--   **Question Answering**: `POST http://localhost:8002/answer`
+- **Summarization**: `POST /summarize` (or `POST http://localhost:8001/summarize` locally)
+- **Question Answering**: `POST /answer` (or `POST http://localhost:8002/answer` locally)
+- **Health**: `GET /health`
