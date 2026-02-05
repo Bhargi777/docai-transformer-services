@@ -31,6 +31,7 @@ def test_qa():
         print(f"Error: {e}")
 
 if __name__ == "__main__":
-    print("Make sure services are running (docker-compose up)")
+    print("Local ports: 8001 (Summarization), 8002 (QA)")
+    print("Vercel Unified: /summarize, /answer")
     test_summarization()
     test_qa()
