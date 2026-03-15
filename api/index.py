@@ -40,30 +40,35 @@ async def root():
 
 @app.post("/summarize")
 async def summarize(request: SummarizeRequest):
-    if not summarizer_instance:
-        raise HTTPException(status_code=500, detail="Summarization model not loaded")
+    if summarizer_instance is None:
+        raise HTTPException(status_code=500, detail="Summarization service is unavailable")
     try:
         summary_text = summarizer_instance.summarize(
             request.text, 
             max_length=request.max_length, 
             min_length=request.min_length
         )
+        if summary_text.startswith("Error:"):
+            raise HTTPException(status_code=500, detail=summary_text)
         return {"summary": summary_text}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/answer")
 async def answer(request: QARequest):
-    if not qa_instance:
-        raise HTTPException(status_code=500, detail="QA model not loaded")
+    if qa_instance is None:
+        raise HTTPException(status_code=500, detail="QA service is unavailable")
     try:
         answer_text = qa_instance.answer(
             request.question, 
             request.context
         )
+        if answer_text.startswith("Error:"):
+            raise HTTPException(status_code=500, detail=answer_text)
         return {"answer": answer_text}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
 
 @app.get("/health")
 async def health():
